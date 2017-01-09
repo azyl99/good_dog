@@ -9,7 +9,6 @@ void Object::readObj(string filename)
 	string line, type, mtllib, mtlname;
 	ifstream fin(filename);
 	istringstream is;
-	GLdouble minX = 0, minY = 0, minZ = 0;
 
 	if (!fin) {
 		cout << "Cannot open the file when ReadObj:" << filename << endl;
@@ -36,9 +35,6 @@ void Object::readObj(string filename)
 		else if (type == "v") {
 			vertex v;
 			is >> v.x >> v.y >> v.z;
-			minX = (minX < v.x) ? v.x : minX;
-			minY = (minY < v.y) ? v.y : minY;
-			minZ = (minZ < v.z) ? v.z : minZ;
 			vertices.push_back(v);
 		}
 		//´æ´¢·¨ÏòÁ¿
@@ -92,7 +88,6 @@ void Object::readObj(string filename)
 		}
 		line = "";
 	}
-	std::cout << minX << " " << minY << " " << minZ << "\n";
 	readMTL(mtllib);
 }
 

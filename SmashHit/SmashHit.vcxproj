@@ -18,10 +18,22 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Gobject.cpp" />
+    <ClCompile Include="Gvector.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="object.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cone.h" />
+    <ClInclude Include="Gobject.h" />
+    <ClInclude Include="Gvector.h" />
+    <ClInclude Include="object.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3BDBE785-7578-4CAB-AE36-244F567DB73A}</ProjectGuid>
+    <ProjectGuid>{9D2C3E6C-3849-4A7A-94EC-0A2CED7FA4F5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>ReadObject</RootNamespace>
+    <RootNamespace>SmashHit</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -87,9 +99,8 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>/D _CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,18 +157,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="cone.h" />
-    <ClInclude Include="Gobject.h" />
-    <ClInclude Include="Gvector.h" />
-    <ClInclude Include="object.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Gobject.cpp" />
-    <ClCompile Include="Gvector.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="object.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -7,7 +7,6 @@
 #include "object.h" 
 #include "cone.h" 
 
-
 GLfloat aspect = 1;
 GLfloat dx = 0, dy = 0, dz = 0;
 GLfloat ax = 0, ay = 0, az = 0;
@@ -16,6 +15,32 @@ GLint MouseDown = 0;
 GLuint texture[5];
 Object maze, obj, frags;
 
+int coneCount = 17;
+int coneLocation[][4]={
+	0, -73, 13, 0,
+	0, 0, 13, 0,
+	0, 73, 13, 0,
+	0, -46, 13, -103,
+	//	0, 14, 22, -103,
+	0, 76, 22, -103,
+	0, 57, 13, -300,
+	0, -44, 5, -399,
+	0,-67, 29, -562,
+	0, 65, 17, -561,
+	0, -45, 14, -758,
+	0, 43, 5, -759,
+	0, 4, 6, - 878,
+	0, -15, 4, - 1145,
+	0, 75, 22, - 1148,
+	0, - 13, 6, - 1523,
+	0, 75, 22, - 1526,
+	0, - 75, 22, - 1603,
+};
+int wHeight = 0;
+int wWidth = 0;
+int wholeList = 0;
+int brokenList = 0;
+bool bAction = false;
 bool bBroken = false;
 
 void myIdle()
@@ -24,8 +49,18 @@ void myIdle()
 	glutPostRedisplay();
 }
 
+float eye[] = { 0, 60, 100 };
+float center[] = { 0, 10, 10 };
 void myReshape(int width, int height)
 {
+	if (height == 0)
+	{
+		height = 1;
+	}
+
+	wHeight = height;
+	wWidth = width;
+
 	aspect = (float)width / (height ? height : 1);
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
@@ -33,7 +68,7 @@ void myReshape(int width, int height)
 	gluPerspective(75, aspect, 1, 10000);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(0, 0, 100, 0, 0, 0, 0, 1, 0);
+	gluLookAt(eye[0], eye[1], eye[2], center[0], center[1], center[2], 0, 1, 0);
 }
 
 void myKeyboard(unsigned char key, int x, int y)
@@ -61,7 +96,11 @@ void myKeyboard(unsigned char key, int x, int y)
 	case 'b':
 		bBroken = !bBroken;
 		break;
+	case ' ':
+		bAction = !bAction;
+		break;
 	}
+	myReshape(wWidth, wHeight);
 }
 #define  GLUT_WHEEL_UP 3           //¶¨Òå¹öÂÖ²Ù×÷  
 #define  GLUT_WHEEL_DOWN 4  
@@ -117,6 +156,19 @@ void setLight()
 	glEnable(GL_DEPTH_TEST);
 }
 
+void showCone()
+{
+	for (int i = 0; i < coneCount; i++) {
+		glPushMatrix();
+		glTranslated(coneLocation[i][1], coneLocation[i][2], coneLocation[i][3]);
+		if (!coneLocation[i][0])
+			glCallList(wholeList);
+		else
+			glCallList(brokenList);
+		glPopMatrix();
+	}
+}
+
 void myDisplay()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -131,13 +183,11 @@ void myDisplay()
 	maze.draw();
 	glPopMatrix();
 
-	glTranslated(0, 0, 30);
-	Cone cone;//×¶
-	if (!bBroken)
-		cone.drawWhole();
-	else
-		cone.drawBroken();
+	showCone();
+	
 	glPopMatrix();
+
+	if (bAction) { eye[2] -= 4.0f; center[2] -= 4.0f; myReshape(wWidth, wHeight);}
 	glutSwapBuffers();
 }
 
@@ -152,6 +202,10 @@ void init()
 	glEnable(GL_DEPTH_TEST);
 	//glEnable(GL_TEXTURE_2D);
 	setLight();
+
+	Cone cone;
+	wholeList = cone.genWholeList();
+	brokenList = cone.genBrokenList();
 }
 
 int main(int argc, char **argv)
