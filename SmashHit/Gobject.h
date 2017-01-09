@@ -10,10 +10,10 @@ private:
 	Gvector velocity;
 
 	Gvector force;
-	double size_x;//half
+	double size_x;
 	double size_y;
 	double size_z;
-	double mass;//do not care
+	double mass;
 	bool isExist;
 
 public:

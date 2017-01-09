@@ -3,7 +3,7 @@
 
 Gobject::Gobject()
 {
-	mass = 0;
+	mass = 1;
 	size_x = 0;
 	size_y = 0;
 	size_z = 0;
