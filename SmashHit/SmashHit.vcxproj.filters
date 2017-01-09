@@ -23,6 +23,12 @@
     <ClCompile Include="object.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="Gbounce.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Gcollision.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cone.h">
@@ -35,6 +41,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gbounce.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gcollision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

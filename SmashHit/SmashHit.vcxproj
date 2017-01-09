@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Gbounce.cpp" />
+    <ClCompile Include="Gcollision.cpp" />
     <ClCompile Include="Gobject.cpp" />
     <ClCompile Include="Gvector.cpp" />
     <ClCompile Include="main.cpp" />
@@ -26,6 +28,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cone.h" />
+    <ClInclude Include="Gbounce.h" />
+    <ClInclude Include="Gcollision.h" />
     <ClInclude Include="Gobject.h" />
     <ClInclude Include="Gvector.h" />
     <ClInclude Include="object.h" />

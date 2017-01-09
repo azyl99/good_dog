@@ -15,33 +15,31 @@ GLint MouseDown = 0;
 GLuint texture[5];
 Object maze, obj, frags;
 
-int coneCount = 17;
-int coneLocation[][4]={
-	0, -73, 13, 0,
-	0, 0, 13, 0,
-	0, 73, 13, 0,
-	0, -46, 13, -103,
-	//	0, 14, 22, -103,
-	0, 76, 22, -103,
-	0, 57, 13, -300,
-	0, -44, 5, -399,
-	0,-67, 29, -562,
-	0, 65, 17, -561,
-	0, -45, 14, -758,
-	0, 43, 5, -759,
-	0, 4, 6, - 878,
-	0, -15, 4, - 1145,
-	0, 75, 22, - 1148,
-	0, - 13, 6, - 1523,
-	0, 75, 22, - 1526,
-	0, - 75, 22, - 1603,
+Cone cones[] = { 
+	Cone(-73, 13, 0), 
+	Cone(0, 13, 0), 
+	Cone(73, 13, 0),
+	Cone(-46, 13, -103),
+	Cone(76, 22, -103),
+	Cone(57, 13, -300),
+	Cone(-44, 5, -399),
+	Cone(-67, 29, -562),
+	Cone(65, 17, -561),
+	Cone(-45, 14, -758),
+	Cone(43, 5, -759),
+	Cone(4, 6, -878),
+	Cone(-15, 4, -1145),
+	Cone(75, 22, -1148),
+	Cone(-13, 6, -1523),
+	Cone(75, 22, -1526),
+	Cone(-75, 22, -1603)
 };
+int coneCount = sizeof(cones) / sizeof(Cone);
 int wHeight = 0;
 int wWidth = 0;
 int wholeList = 0;
 int brokenList = 0;
 bool bAction = false;
-bool bBroken = false;
 
 void myIdle()
 {
@@ -94,7 +92,7 @@ void myKeyboard(unsigned char key, int x, int y)
 		dy -= 1.0f;
 		break;
 	case 'b':
-		bBroken = !bBroken;
+		cones[0].bBroken = !cones[0].bBroken;
 		break;
 	case ' ':
 		bAction = !bAction;
@@ -156,35 +154,25 @@ void setLight()
 	glEnable(GL_DEPTH_TEST);
 }
 
-void showCone()
-{
-	for (int i = 0; i < coneCount; i++) {
-		glPushMatrix();
-		glTranslated(coneLocation[i][1], coneLocation[i][2], coneLocation[i][3]);
-		if (!coneLocation[i][0])
-			glCallList(wholeList);
-		else
-			glCallList(brokenList);
-		glPopMatrix();
-	}
-}
-
 void myDisplay()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glPushMatrix();
 
-	glTranslatef(dx, dy, dz);
-	glRotatef(ax, 1.0f, 0.0f, 0.0f);
-	glRotatef(ay, 0.0f, 1.0f, 0.0f);
-	//ÃÔ¹¬
-	glPushMatrix();
-	glTranslated(-64, 0, 0);
-	maze.draw();
-	glPopMatrix();
+		glTranslatef(dx, dy, dz);
+		glRotatef(ax, 1.0f, 0.0f, 0.0f);
+		glRotatef(ay, 0.0f, 1.0f, 0.0f);
+		//ÃÔ¹¬
+		glPushMatrix();
+		glTranslated(-64, 0, 0);
+		maze.draw();
+		glPopMatrix();
 
-	showCone();
-	
+		//»­cones
+		for (int i = 0; i < coneCount; i++) {
+			cones[i].draw();
+		}
+
 	glPopMatrix();
 
 	if (bAction) { eye[2] -= 4.0f; center[2] -= 4.0f; myReshape(wWidth, wHeight);}
@@ -203,10 +191,10 @@ void init()
 	//glEnable(GL_TEXTURE_2D);
 	setLight();
 
-	Cone cone;
-	wholeList = cone.genWholeList();
-	brokenList = cone.genBrokenList();
+	wholeList = Cone::genBrokenList();
+	brokenList = Cone::genWholeList();
 }
+
 
 int main(int argc, char **argv)
 {
